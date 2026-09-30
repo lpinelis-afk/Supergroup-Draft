@@ -1,0 +1,441 @@
+/* ==========================================================================
+   style.css  --  ALL VISUAL STYLING
+   ==========================================================================
+   Sections, in page order:
+     1. Design tokens (colors)        6. Current-band card + member buttons
+     2. Page + header                 7. Notice / reroll button
+     3. Score bar                     8. Final "poster" screen
+     4. Fit tags + chemistry log      9. Buttons + reduced-motion
+     5. Setlist (filled slots)
+   Change the colors in section 1 to re-theme the whole game.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ---- 1. DESIGN TOKENS: change these to re-theme the game ---- */
+:root{
+  --bg: #16130f;
+  --bg2: #1f1a14;
+  --stub: #241e17;
+  --ink: #f2ece0;
+  --ink-dim: #b8ae9c;
+  --accent: #e8432c;
+  --accent2: #f4c430;
+  --line: #3a332a;
+  --teal: #3a7d7a;
+}
+
+/* ---- 2. PAGE + HEADER (note: the second background-image on body overrides the first, adding faint scanlines) ---- */
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(ellipse at top left, #1f1912 0%, transparent 55%),
+    radial-gradient(ellipse at bottom right, #1a1510 0%, transparent 55%),
+    var(--bg);
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  min-height:100vh;
+  padding:32px 16px 64px;
+  background-image:
+    radial-gradient(ellipse at top left, #1f1912 0%, transparent 55%),
+    radial-gradient(ellipse at bottom right, #1a1510 0%, transparent 55%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px);
+}
+
+.wrap{max-width:640px;margin:0 auto;}
+
+.eyebrow{
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--accent2);
+  text-align:center;
+  margin-bottom:8px;
+}
+h1.title{
+  font-family:'Anton',sans-serif;
+  font-weight:400;
+  font-size:clamp(38px, 9vw, 58px);
+  letter-spacing:0.01em;
+  text-align:center;
+  line-height:0.92;
+  margin:0 0 6px;
+  color:var(--ink);
+  text-shadow: 3px 3px 0 var(--accent);
+}
+.subtitle{
+  text-align:center;
+  color:var(--ink-dim);
+  font-size:14px;
+  margin-bottom:30px;
+  max-width:440px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* ---- 3. SCORE BAR: running total under the title ---- */
+.scorebar{
+  display:flex;
+  justify-content:center;
+  align-items:baseline;
+  gap:8px;
+  margin-bottom:20px;
+  font-family:'Space Mono',monospace;
+}
+.scorebar .label{
+  font-size:11px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--ink-dim);
+}
+.scorebar .value{
+  font-size:22px;
+  font-weight:700;
+  color:var(--accent2);
+}
+.scorebar .maxval{
+  font-size:11px;
+  color:var(--ink-dim);
+}
+
+/* ---- 4. FIT TAGS (Perfect/Stretch/Wildcard badges) + CHEMISTRY LOG (friend/clash entries) ---- */
+.fit-tag{
+  display:inline-block;
+  font-family:'Space Mono',monospace;
+  font-size:8px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  padding:2px 5px;
+  border-radius:3px;
+  margin-top:4px;
+}
+.fit-tag.perfect{background:rgba(58,125,122,0.25); color:#7fc7c3;}
+.fit-tag.stretch{background:rgba(244,196,48,0.2); color:var(--accent2);}
+.fit-tag.wildcard{background:rgba(232,67,44,0.2); color:#ff8a75;}
+.lname .fit-tag{margin:0 0 0 8px; vertical-align:middle;}
+
+.clashlog{
+  margin:-8px 0 22px;
+}
+.clashlog-title{
+  font-family:'Space Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:8px;
+}
+.clash-entry{
+  border-left:2px solid var(--accent);
+  padding:6px 0 6px 10px;
+  margin-bottom:6px;
+}
+.clash-entry.positive{border-left-color:var(--teal);}
+.clash-entry.negative{border-left-color:var(--accent);}
+.clash-entry.positive .clash-penalty{color:#7fc7c3;}
+.clash-entry.negative .clash-penalty{color:var(--accent);}
+.clash-names{
+  font-size:13px;
+  font-weight:600;
+}
+.clash-penalty{
+  font-family:'Space Mono',monospace;
+  font-size:12px;
+  color:var(--accent);
+  margin-left:8px;
+}
+.clash-reason{
+  font-size:12px;
+  color:var(--ink-dim);
+  font-style:italic;
+  margin-top:2px;
+}
+#clashlog-final{
+  text-align:left;
+  margin:0 0 10px;
+}
+
+/* ---- 5. SETLIST: the row of slot 'tickets' that fill up as you draft ---- */
+.setlist{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:4px 4px 14px;
+  margin-bottom:22px;
+  border-bottom:1px solid var(--line);
+}
+.stub{
+  flex:0 0 auto;
+  background:var(--stub);
+  border:1px dashed var(--line);
+  border-radius:4px;
+  padding:8px 10px;
+  min-width:98px;
+  position:relative;
+  transition: border-color 0.2s, background 0.2s;
+}
+.stub.empty{opacity:0.35;}
+.stub.just-filled{
+  border-color:var(--accent2);
+  background:rgba(244,196,48,0.08);
+}
+.stub .role{
+  font-family:'Space Mono',monospace;
+  font-size:9px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--accent2);
+  display:block;
+  margin-bottom:3px;
+}
+.stub .name{
+  font-size:13px;
+  font-weight:600;
+  line-height:1.15;
+}
+.stub .band{
+  font-size:10px;
+  color:var(--ink-dim);
+  margin-top:2px;
+}
+
+/* ---- 6. CURRENT ROUND: 'Open: ...' heading, band card, member buttons ---- */
+.round-label{
+  font-family:'Space Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.1em;
+  color:var(--ink-dim);
+  text-align:center;
+  margin-bottom:2px;
+}
+.role-name{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(22px,5.5vw,28px);
+  text-align:center;
+  color:var(--accent2);
+  margin:0 0 22px;
+  letter-spacing:0.01em;
+}
+
+.card{
+  background:var(--bg2);
+  border:1px solid var(--line);
+  border-radius:2px;
+  padding:26px 22px;
+  position:relative;
+  animation: slideIn 0.4s ease;
+}
+.card::before{
+  content:"";
+  position:absolute;
+  top:0;left:0;right:0;
+  height:4px;
+  background:repeating-linear-gradient(90deg, var(--accent) 0 10px, var(--accent2) 10px 20px);
+}
+@keyframes slideIn{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
+}
+@keyframes shake{
+  0%,100%{transform:translateX(0);}
+  25%{transform:translateX(-5px);}
+  75%{transform:translateX(5px);}
+}
+.shake{animation: shake 0.3s ease;}
+
+.stage-label{
+  font-family:'Space Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--teal);
+  margin-bottom:6px;
+}
+.band-name{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(28px,7vw,40px);
+  line-height:1;
+  margin:0 0 22px;
+  color:var(--ink);
+}
+
+.members{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.member-btn{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  text-align:left;
+  background:transparent;
+  border:1px solid var(--line);
+  border-radius:2px;
+  padding:14px 16px;
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;
+  transition:border-color 0.15s, background 0.15s, transform 0.1s;
+}
+.member-btn:hover{
+  border-color:var(--accent);
+  background:rgba(232,67,44,0.08);
+}
+.member-btn:active{transform:scale(0.98);}
+.member-btn .instr{
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--ink-dim);
+  white-space:nowrap;
+}
+.member-btn:hover .instr{color:var(--accent2);}
+
+/* ---- 7. NOTICE (error message) + REROLL BUTTON ---- */
+.notice{
+  text-align:center;
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.04em;
+  color:var(--accent);
+  margin-top:14px;
+  min-height:16px;
+}
+
+.skip-row{
+  text-align:center;
+  margin-top:18px;
+}
+.skip-btn{
+  background:none;
+  border:none;
+  color:var(--ink-dim);
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  text-decoration:underline;
+  cursor:pointer;
+}
+.skip-btn:hover{color:var(--accent2);}
+.skip-btn.disabled{
+  color:var(--line);
+  text-decoration:none;
+  cursor:default;
+  font-size:11px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  font-family:'Space Mono',monospace;
+}
+
+/* ---- 8. FINAL POSTER SCREEN: shown when all slots are filled ---- */
+.poster{
+  background:var(--bg2);
+  border:1px solid var(--line);
+  border-radius:2px;
+  padding:32px 24px;
+  text-align:center;
+  animation: slideIn 0.5s ease;
+}
+.poster .eyebrow2{
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.18em;
+  color:var(--teal);
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.poster .score-final{
+  font-family:'Space Mono',monospace;
+  font-size:13px;
+  color:var(--ink-dim);
+  margin:-14px 0 26px;
+}
+.poster .score-final .num{
+  color:var(--accent2);
+  font-weight:700;
+  font-size:16px;
+}
+.poster .grade{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(18px,4.5vw,24px);
+  color:var(--accent);
+  margin:-14px 0 26px;
+  letter-spacing:0.01em;
+}
+.poster h2{
+  font-family:'Anton',sans-serif;
+  font-size:clamp(34px,9vw,52px);
+  line-height:0.95;
+  margin:0 0 26px;
+  color:var(--ink);
+  text-shadow:3px 3px 0 var(--accent2);
+}
+.lineup-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
+  text-align:left;
+}
+.lineup-row:last-of-type{border-bottom:none;}
+.lineup-row .lrole{
+  font-family:'Space Mono',monospace;
+  font-size:10px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--accent2);
+  flex:0 0 120px;
+}
+.lineup-row .lname{
+  flex:1;
+  font-size:17px;
+  font-weight:700;
+}
+.lineup-row .lband{
+  font-size:12px;
+  color:var(--ink-dim);
+  font-style:italic;
+}
+
+/* ---- 9. BUTTONS + REDUCED MOTION ---- */
+.actions{
+  margin-top:28px;
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.btn{
+  font-family:'Space Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  padding:12px 20px;
+  border-radius:2px;
+  cursor:pointer;
+  border:1px solid var(--accent);
+  background:var(--accent);
+  color:var(--bg);
+  font-weight:700;
+}
+.btn.secondary{
+  background:transparent;
+  color:var(--ink-dim);
+  border-color:var(--line);
+}
+.btn:hover{opacity:0.85;}
+
+@media (prefers-reduced-motion: reduce){
+  .card, .poster{animation:none;}
+  .shake{animation:none;}
+}
