@@ -1,1 +1,1 @@
-## Due to an issue with git and me being lazy I will move this repository to another repository that I will link here
+## Due to an issue with git and me being lazy I moved everything to this repository: https://github.com/lpinelis-afk/NML-Draft/releases
